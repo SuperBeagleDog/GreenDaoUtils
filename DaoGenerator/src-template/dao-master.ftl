@@ -90,7 +90,9 @@ public class ${schema.prefix}DaoMaster extends AbstractDaoMaster {
     public ${schema.prefix}DaoSession newSession(IdentityScopeType type) {
         return new ${schema.prefix}DaoSession(db, type, daoConfigMap);
     }
-
+    public ${schema.prefix}Map<Class<? extends AbstractDao<?, ?>>, DaoConfig> getDaoConfigMap() {
+        return daoConfigMap;
+    }
     /**
      * Calls {@link #createAllTables(Database, boolean)} in {@link #onCreate(Database)} -
      */
