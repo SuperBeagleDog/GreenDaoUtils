@@ -44,6 +44,7 @@ public class DaoGenerator {
     private Pattern patternKeepMethods;
 
     private Template templateDao;
+    private Template templateDaoUtils;
     private Template templateDaoMaster;
     private Template templateDaoSession;
     private Template templateEntity;
@@ -64,6 +65,7 @@ public class DaoGenerator {
         templateDaoMaster = config.getTemplate("dao-master.ftl");
         templateDaoSession = config.getTemplate("dao-session.ftl");
         templateEntity = config.getTemplate("entity.ftl");
+        templateDaoUtils = config.getTemplate("dao-utils.ftl");
         templateDaoUnitTest = config.getTemplate("dao-unit-test.ftl");
         templateContentProvider = config.getTemplate("content-provider.ftl");
     }
@@ -81,7 +83,7 @@ public class DaoGenerator {
             File dir = new File("src/main/resources/");
             if (!dir.exists()) {
                 // Working dir is base module dir
-                dir = new File("DaoGenerator/src/main/resources/");
+                dir = new File("DaoGenerator/src-template");
             }
             if (dir.exists() && new File(dir, probingTemplate).exists()) {
                 config.setDirectoryForTemplateLoading(dir);
@@ -144,7 +146,9 @@ public class DaoGenerator {
                 schema.getPrefix() + "DaoMaster", schema, null);
         generate(templateDaoSession, outDirFile, schema.getDefaultJavaPackageDao(),
                 schema.getPrefix() + "DaoSession", schema, null);
-
+        generate(templateDaoUtils, outDirFile,
+                schema.getDefaultJavaPackageDao(), schema.getPrefix() + "DaoUtils",
+                schema, null);
         long time = System.currentTimeMillis() - start;
         System.out.println("Processed " + entities.size() + " entities in " + time + "ms");
     }
@@ -163,8 +167,11 @@ public class DaoGenerator {
         generate(template, outDirFile, javaPackage, javaClassName, schema, entity, null);
     }
 
-    private void generate(Template template, File outDirFile, String javaPackage, String javaClassName, Schema schema,
-                          Entity entity, Map<String, Object> additionalObjectsForTemplate) throws Exception {
+    private void generate(Template template, File outDirFile,
+                          String javaPackage, String javaClassName,
+                          Schema schema,Entity entity,
+                          Map<String, Object> additionalObjectsForTemplate)
+            throws Exception {
         Map<String, Object> root = new HashMap<>();
         root.put("schema", schema);
         root.put("entity", entity);
@@ -172,7 +179,8 @@ public class DaoGenerator {
             root.putAll(additionalObjectsForTemplate);
         }
         try {
-            File file = toJavaFilename(outDirFile, javaPackage, javaClassName);
+            File file = toJavaFilename(outDirFile,
+                    javaPackage, javaClassName);
             //noinspection ResultOfMethodCallIgnored
             file.getParentFile().mkdirs();
 
