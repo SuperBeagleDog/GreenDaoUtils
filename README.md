@@ -42,6 +42,12 @@ project的gradle:
        compile 'com.github.SuperBeagleDog:GreenDaoUtils:1.0.3'
     }
 
+需要注意的一点是,这个工具已经集成了GreenDao的jar包,所以不要再在当前项目的gradle的depencies里面添加如下添码
+
+得要的事说三遍,千万不要、不要、不要在gralde里再添加这一行代码！！！
+
+        compile 'org.greenrobot:greendao:3.2.0'
+        
 这样就已经配置好了代码生成器以及GreenDao的增删查改的优化工具。
 
 但是，代码生成器需要开发者，自已定义要生成哪些Dao类，以及生成的GreenDao的相关类的存放路径,
