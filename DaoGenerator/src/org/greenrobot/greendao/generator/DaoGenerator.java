@@ -44,7 +44,6 @@ public class DaoGenerator {
     private Pattern patternKeepMethods;
 
     private Template templateDao;
-    private Template templateDaoUtils;
     private Template templateDaoMaster;
     private Template templateDaoSession;
     private Template templateEntity;
@@ -65,7 +64,6 @@ public class DaoGenerator {
         templateDaoMaster = config.getTemplate("dao-master.ftl");
         templateDaoSession = config.getTemplate("dao-session.ftl");
         templateEntity = config.getTemplate("entity.ftl");
-        templateDaoUtils = config.getTemplate("dao-utils.ftl");
         templateDaoUnitTest = config.getTemplate("dao-unit-test.ftl");
         templateContentProvider = config.getTemplate("content-provider.ftl");
     }
@@ -146,9 +144,6 @@ public class DaoGenerator {
                 schema.getPrefix() + "DaoMaster", schema, null);
         generate(templateDaoSession, outDirFile, schema.getDefaultJavaPackageDao(),
                 schema.getPrefix() + "DaoSession", schema, null);
-        generate(templateDaoUtils, outDirFile,
-                schema.getDefaultJavaPackageDao(), schema.getPrefix() + "DaoUtils",
-                schema, null);
         long time = System.currentTimeMillis() - start;
         System.out.println("Processed " + entities.size() + " entities in " + time + "ms");
     }
