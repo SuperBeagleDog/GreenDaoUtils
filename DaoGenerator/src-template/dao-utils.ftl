@@ -66,5 +66,79 @@ public class DaoUtils {
         }
 
     }
+    public <T> void  insert(T entity) {
 
+        try {
+
+            // 因为生成的Dao类与Master在同一个路径下
+            // 所以,通过master对象来获取包名,通过entity来获取类名
+            // 从而实现通过类名,来反射获取Class。
+            Class cls = Class.forName(daoMaster.getClass().getPackage().getName()
+                            +"."+entity.getClass().getSimpleName()+"Dao");
+
+            AbstractDao<T, Long> dao = null;
+            DaoConfig daoConfig;
+            daoConfig = daoMaster.getDaoConfigMap().get(cls).clone();
+            daoConfig.initIdentityScope(IdentityScopeType.Session);
+
+            //获取所有构造函数
+            Constructor constructors[] = cls.getDeclaredConstructors();
+            for (Constructor constructor : constructors) {
+                //获取构造函数的参数
+                Class c[] = constructor.getParameterTypes();
+
+                if (c.length == 1) {
+                    dao = (AbstractDao) cls.getConstructor(c)
+                            .newInstance(daoConfig);
+                }
+            }
+
+            dao.insert(entity);
+
+        } catch (NullPointerException e) {
+            Log.d(TAG,"插入失败:"+e.toString());
+        } catch (Exception e) {
+            Log.d(TAG,"插入失败:"+e.toString());
+        }
+
+    }
+
+        /**
+         * 只查询一条
+         * @param property 要查询的Dao类的字段
+         * @param where 要匹配的字符串
+         */
+        public <T> T searchUnique(GProperty property, String where) {
+
+            try {
+
+                Class cls = property.getDaoClass();
+                AbstractDao<T, Long> dao = null;
+                DaoConfig daoConfig;
+                daoConfig = daoMaster.getDaoConfigMap().get(cls).clone();
+                daoConfig.initIdentityScope(IdentityScopeType.Session);
+
+                //获取所有构造函数
+                Constructor constructors[] = cls.getDeclaredConstructors();
+                for (Constructor constructor : constructors) {
+                    //获取构造函数的参数
+                    Class c[] = constructor.getParameterTypes();
+
+                    if (c.length == 1) {
+                        dao = (AbstractDao) cls.getConstructor(c)
+                                .newInstance(daoConfig);
+                    }
+                }
+                return dao.queryBuilder()
+                        .where(property.eq(where))
+                        .build().unique();
+            } catch (NullPointerException e) {
+                Log.d(TAG,"生成失败:"+e.toString());
+                return null;
+            } catch (Exception e) {
+                Log.d(TAG,"生成失败:"+e.toString());
+                return null;
+            }
+
+        }
 }
