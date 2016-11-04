@@ -3,14 +3,17 @@ GreenDao的代码生成器的优化版
 
 使用方法：
 
-一、添加两行代码：
+一、添加两段代码：
 
 1、在project的gralde里添加 
 
     maven { url "https://jitpack.io" }
+    classpath 'org.greenrobot:greendao-gradle-plugin:3.2.0'
+ 
 2、在当前项目的gradle里添加  
 
-    注:x.x.x代表最新版本号(1.0.3)
+    注:x.x.x代表最新版本号(比如1.0.3)
+    
     compile 'com.github.SuperBeagleDog:GreenDaoUtils:x.x.x'
 
 添加后如下所示,如下图所示:
@@ -21,6 +24,15 @@ project的gradle:
        repositories {
           jcenter()
           maven { url "https://jitpack.io" }
+       }
+    }
+    
+    buildscript {
+       repositories {
+         mavenCentral()
+       }
+       dependencies {
+         classpath 'org.greenrobot:greendao-gradle-plugin:3.2.0'
        }
     }
 
