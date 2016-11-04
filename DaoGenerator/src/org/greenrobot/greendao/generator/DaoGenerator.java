@@ -42,7 +42,7 @@ public class DaoGenerator {
     private Pattern patternKeepIncludes;
     private Pattern patternKeepFields;
     private Pattern patternKeepMethods;
-
+	private Template templateGProperty;
     private Template templateDao;
     private Template templateDaoUtils;
     private Template templateDaoMaster;
@@ -67,6 +67,7 @@ public class DaoGenerator {
         templateEntity = config.getTemplate("entity.ftl");
         templateDaoUtils = config.getTemplate("dao-utils.ftl");
         templateDaoUnitTest = config.getTemplate("dao-unit-test.ftl");
+		templateGProperty = config.getTemplate("dao-gproperty");
         templateContentProvider = config.getTemplate("content-provider.ftl");
     }
 
@@ -107,7 +108,6 @@ public class DaoGenerator {
     }
 
     /** Generates all entities and DAOs for the given schema. */
-
     public void generateAll(Schema schema, String outDir, String outDirEntity, String outDirTest) throws Exception {
         long start = System.currentTimeMillis();
 
@@ -150,6 +150,10 @@ public class DaoGenerator {
         generate(templateDaoUtils, outDirFile,
                 schema.getDefaultJavaPackageDao(), schema.getPrefix() + "DaoUtils",
                 schema, null);
+		generate(templateGProperty, outDirFile,
+                schema.getDefaultJavaPackageDao(), "GProperty",
+                schema, null);
+				
         long time = System.currentTimeMillis() - start;
         System.out.println("Processed " + entities.size() + " entities in " + time + "ms");
     }
