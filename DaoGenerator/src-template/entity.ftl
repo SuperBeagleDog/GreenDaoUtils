@@ -75,8 +75,6 @@ ${entity.codeBeforeClass}
     <#assign idxAttr>indexes = <@multiIndexes/></#assign>
     <#assign entityAttrs = entityAttrs + [idxAttr]>
 </#if>
-<#if entity.skipCreationInDb><#assign entityAttrs = entityAttrs + ["createInDb = false"]></#if>
-@Entity<#if (entityAttrs?size > 0)>(${entityAttrs?join(", ")})</#if>
 public class ${entity.className}<#if
 entity.superclass?has_content> extends ${entity.superclass} </#if><#if
 entity.interfacesToImplement?has_content> implements <#list entity.interfacesToImplement
