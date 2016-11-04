@@ -34,6 +34,7 @@ import org.greenrobot.greendao.identityscope.IdentityScopeType;
 import org.greenrobot.greendao.internal.DaoConfig;
 
 import java.util.Map;
+import java.util.HashMap;
 
 <#list schema.entities as entity>
 <#if schema.defaultJavaPackageDao != entity.javaPackageDao>
@@ -46,15 +47,17 @@ import ${entity.javaPackageDao}.${entity.classNameDao};
  * Master of DAO (schema version ${schema.version?c}): knows all DAOs.
  */
 public class ${schema.prefix}DaoMaster extends AbstractDaoMaster {
+
     public static final int SCHEMA_VERSION = ${schema.version?c};
 
     /** Creates underlying database table using DAOs. */
     public static void createAllTables(Database db, boolean ifNotExists) {
 <#list schema.entities as entity>
 <#if !entity.skipCreationInDb>
-        ${entity.classNameDao}.createTable(db, ifNotExists);
+            ${entity.classNameDao}.createTable(db, ifNotExists);
 </#if>
 </#list>
+
     }
 
     /** Drops underlying database table using DAOs. */
@@ -94,9 +97,11 @@ public class ${schema.prefix}DaoMaster extends AbstractDaoMaster {
     public ${schema.prefix}DaoSession newSession(IdentityScopeType type) {
         return new ${schema.prefix}DaoSession(db, type, daoConfigMap);
     }
+
     public ${schema.prefix}Map<Class<? extends AbstractDao<?, ?>>, DaoConfig> getDaoConfigMap() {
         return daoConfigMap;
     }
+
     /**
      * Calls {@link #createAllTables(Database, boolean)} in {@link #onCreate(Database)} -
      */
