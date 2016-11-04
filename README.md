@@ -12,9 +12,7 @@ GreenDao的代码生成器的优化版
  
 2、在当前项目的gradle里添加  
 
-    注:x.x.x代表最新版本号(比如1.0.3)
-    
-    compile 'com.github.SuperBeagleDog:GreenDaoUtils:x.x.x'
+    compile 'com.github.SuperBeagleDog:GreenDaoUtils:1.0.4'
 
 添加后如下所示,如下图所示:
 
