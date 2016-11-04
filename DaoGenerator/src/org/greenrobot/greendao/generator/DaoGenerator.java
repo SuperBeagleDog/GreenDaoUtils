@@ -67,7 +67,7 @@ public class DaoGenerator {
         templateEntity = config.getTemplate("entity.ftl");
         templateDaoUtils = config.getTemplate("dao-utils.ftl");
         templateDaoUnitTest = config.getTemplate("dao-unit-test.ftl");
-	templateGProperty = config.getTemplate("dao-gproperty");
+	templateGProperty = config.getTemplate("dao-gproperty.ftl");
         templateContentProvider = config.getTemplate("content-provider.ftl");
     }
 
