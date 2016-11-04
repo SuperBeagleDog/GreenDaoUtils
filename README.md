@@ -40,9 +40,9 @@ project的gradle:
        compile 'com.github.SuperBeagleDog:GreenDaoUtils:1.0.3'
     }
 
-需要注意的一点是,这个工具已经集成了GreenDao的jar包,所以不要再在当前项目的gradle的depencies里面添加如下添码
+需要注意的一点是,这个工具已经集成了GreenDao的jar包,所以不要再在当前项目的gradle的depencies里面添加如下代码
 
-得要的事说三遍,千万不要、不要、不要在gralde里再添加这一行代码！！！
+重要的事说三遍,千万不要、不要、不要在gralde里再添加这一行代码！！！
 
     compile 'org.greenrobot:greendao:3.2.0'
         
