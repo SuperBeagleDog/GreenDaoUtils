@@ -46,7 +46,7 @@ project的gradle:
 
 得要的事说三遍,千万不要、不要、不要在gralde里再添加这一行代码！！！
 
-        compile 'org.greenrobot:greendao:3.2.0'
+    compile 'org.greenrobot:greendao:3.2.0'
         
 这样就已经配置好了代码生成器以及GreenDao的增删查改的优化工具。
 
